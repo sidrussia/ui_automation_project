@@ -1,11 +1,15 @@
+from pages.main_page import MainPage
 import pytest
 from selenium import webdriver
-from selenium.webdriver.common.by import By
+# from selenium.webdriver.common.by import By
 # import time
+
+#def go_to_login_page(browser):
+    #login_link = browser.find_element(By.CSS_SELECTOR, "#login_link")
+    #login_link.click()
 
 def test_guest_can_go_to_login_page(browser):
     link = "http://selenium1py.pythonanywhere.com/"
-    browser.get(link)
-    login_link = browser.find_element(By.CSS_SELECTOR, "#login_link")
-    # time.sleep(3)
-    login_link.click()
+    page = MainPage(browser, link)    # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url
+    page.open()                                   # открываем страницу
+    page.go_to_login_page()              # выполняем метод страницы - переходим на страницу логина
