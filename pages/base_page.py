@@ -1,8 +1,9 @@
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
 import math
 
 class BasePage():
-    def __init__(self, browser, url, timeout=7):
+    def __init__(self, browser, url, timeout=10):
     	self.browser = browser
     	self.url = url
     	self.browser.implicitly_wait(timeout)
