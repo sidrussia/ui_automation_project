@@ -26,4 +26,4 @@ class BasePageLocators():
     
     
 class BasketPageLocators():
-    EMPTY_BASKET_MESSAGE = (By.XPATH, "//p")
+    EMPTY_BASKET_MESSAGE = (By.XPATH, "//*[contains(text(), 'basket is empty')]")

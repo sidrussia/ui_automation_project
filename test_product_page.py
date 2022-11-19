@@ -4,19 +4,15 @@ from pages.product_page import ProductPage
 import time
 from pages.basket_page import BasketPage
 
-
-'''
 @pytest.mark.parametrize('link', [0, 1, 2, 3, 4, 5, 6, pytest.param(7, marks=pytest.mark.xfail(reason="fixing this bug")), 8, 9])
 def test_guest_can_add_product_to_basket(browser, link):   # item can add to basket
     link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{link}"
     page = ProductPage(browser, link)
     page.open()
     page.should_be_add_product_to_basket()
-    #time.sleep(2)
     page.solve_quiz_and_get_code()
     page.correct_name_product()
-    page.correct_value_in_basket()
-'''  
+    page.correct_value_in_basket() 
     
 @pytest.mark.xfail(reason="product correct added to basket with message")
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser): # there is no success massage after adding product to basket
@@ -54,18 +50,18 @@ def test_guest_can_go_to_login_page_from_product_page(browser): # go to login li
     page.go_to_login_page()
     
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser): 
-    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/hacking-exposed-wireless_208/"
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/hacking-exposed-wireless_208/"
     page = BasketPage(browser, link)
     page.open()
     page.go_to_basket_page()
     page.should_be_empty_basket()
- 
-@pytest.mark.xfail(reason="basket is empty - OK")   
+    
 def test_guest_cant_see_basket_empty_message_after_adding_product(browser):
-    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/hacking-exposed-wireless_208/"
-    page = BasketPage(browser, link)
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/hacking-exposed-wireless_208/"
+    page = ProductPage(browser, link)
     page.open()
-    #page.should_be_add_product_to_basket()
+    page.should_be_add_product_to_basket()
     page.go_to_basket_page()
-    page.should_be_no_empty_basket_message()
+    basket_page = BasketPage(browser, browser.current_url)
+    basket_page.should_be_no_empty_basket_message()
     
