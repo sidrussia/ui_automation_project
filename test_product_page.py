@@ -1,9 +1,39 @@
 import pytest
 from selenium import webdriver
 from pages.product_page import ProductPage
-import time
 from pages.basket_page import BasketPage
+from pages.login_page import LoginPage
+from pages.base_page import BasePage
+import time
 
+
+class TestUserAddToBasketFromProductPage():
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+    	link = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
+    	email, password = str(time.time()) + "@fakemail.org", "stepik123456789"
+    	page = LoginPage(browser, link)
+    	page.open()
+    	page.register_new_user(email=email, password=password)
+    	base_page = BasePage(browser, browser.current_url)
+    	base_page.should_be_authorized_user()
+    
+    def test_user_cant_see_success_message(self, browser):
+    	
+       link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+       page = ProductPage(browser, link)
+       page.open()
+       page.should_not_be_success_message()
+     
+    def test_user_can_add_product_to_basket(self, browser): 
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_be_add_product_to_basket()
+        page.correct_name_product()
+        page.correct_value_in_basket() 
+    
+    
 @pytest.mark.parametrize('link', [0, 1, 2, 3, 4, 5, 6, pytest.param(7, marks=pytest.mark.xfail(reason="fixing this bug")), 8, 9])
 def test_guest_can_add_product_to_basket(browser, link):   # item can add to basket
     link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{link}"
@@ -12,8 +42,14 @@ def test_guest_can_add_product_to_basket(browser, link):   # item can add to bas
     page.should_be_add_product_to_basket()
     page.solve_quiz_and_get_code()
     page.correct_name_product()
-    page.correct_value_in_basket() 
-    
+    page.correct_value_in_basket()
+ 
+def test_guest_cant_see_success_message(browser): # there is no success massage after open product page
+     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
+     page = ProductPage(browser, link)
+     page.open()
+     page.should_not_be_success_message()
+ 
 @pytest.mark.xfail(reason="product correct added to basket with message")
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser): # there is no success massage after adding product to basket
     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
@@ -22,12 +58,6 @@ def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     page.should_be_add_product_to_basket()
     page.should_not_be_success_message()
     
-def test_guest_cant_see_success_message(browser): # there is no success massage after open product page
-     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
-     page = ProductPage(browser, link)
-     page.open()
-     page.should_not_be_success_message()
-         
 @pytest.mark.xfail(reason="disappearing of alert is not realized yet")
 def test_message_disappeared_after_adding_product_to_basket(browser): # success message is disappearing?
      link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/" 

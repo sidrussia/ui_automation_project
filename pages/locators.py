@@ -1,6 +1,13 @@
 from selenium.webdriver.common.by import By
 
 
+class BasePageLocators():
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+    SEE_BASKET_PAGE = (By.XPATH, "//a[@class='btn btn-default']")
+    USER_ICON = (By.CSS_SELECTOR, ".icon-user")
+
+
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     
@@ -8,6 +15,10 @@ class MainPageLocators():
 class LoginPageLocators():
     LOGIN_FORM = (By.CSS_SELECTOR, "#login_form")
     REGISTER_FORM = (By.CSS_SELECTOR, "#register_form")
+    REGISTER_EMAIL = (By.XPATH, "//input[@name='registration-email']")
+    REGISTER_PASSWORD = (By.XPATH, "//input[@name='registration-password1']")
+    REPEAT_REGISTER_PASSWORD = (By.XPATH, "//input[@name='registration-password2']")
+    SUBMIT_BUTTON = (By.XPATH, "//button[@name='registration_submit']")
     
     
 class ProductPageLocators():
@@ -18,12 +29,6 @@ class ProductPageLocators():
     BASKET_VALUE_MESSAGE = (By.XPATH, "//div[@class='alertinner ']/p/strong")
     SUCCESS_MESSAGE = (By.XPATH, "//div[@id='messages']/div[1]")
     
-    
-class BasePageLocators():
-    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
-    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
-    SEE_BASKET_PAGE = (By.XPATH, "//a[@class='btn btn-default']")
-    
-    
+        
 class BasketPageLocators():
     EMPTY_BASKET_MESSAGE = (By.XPATH, "//*[contains(text(), 'basket is empty')]")
