@@ -34,10 +34,11 @@ class TestUserAddToBasketFromProductPage():
         page.correct_name_product()
         page.correct_value_in_basket() 
     
-@pytest.mark.need_review    
-@pytest.mark.parametrize('link', [0, 1, 2, 3, 4, 5, 6, pytest.param(7, marks=pytest.mark.xfail(reason="fixing this bug")), 8, 9])
-def test_guest_can_add_product_to_basket(browser, link):   # item can add to basket
-    link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{link}"
+   
+# @pytest.mark.parametrize('link', [0, 1, 2, 3, 4, 5, 6, pytest.param(7, marks=pytest.mark.xfail(reason="fixing this bug")), 8, 9])
+@pytest.mark.need_review 
+def test_guest_can_add_product_to_basket(browser):   # item can add to basket
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1"
     page = ProductPage(browser, link)
     page.open()
     page.should_be_add_product_to_basket()
@@ -46,7 +47,7 @@ def test_guest_can_add_product_to_basket(browser, link):   # item can add to bas
     page.correct_value_in_basket()
  
 def test_guest_cant_see_success_message(browser): # there is no success massage after open product page
-     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
+     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
      page = ProductPage(browser, link)
      page.open()
      page.should_not_be_success_message()

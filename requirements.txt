@@ -1,7 +1,2 @@
-async-generator==1.10
-pluggy==1.0.0
-py==1.11.0
-pyparsing==3.0.9
-pyperclip==1.8.2
 pytest==7.1.2
 selenium==4.3.0
